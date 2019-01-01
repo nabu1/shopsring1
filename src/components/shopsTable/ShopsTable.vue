@@ -21,8 +21,16 @@
 import axios from 'axios'
 
 export default {
-  mounted() {
-    this.loadShops();
+  created() {
+    axios
+      .get('http://localhost:3000/biedry')
+      .then(res => {
+        console.log('created()')
+        console.log(res.data)
+        this.$store.dispatch('addAllShops', res.data)
+        this.items = this.$store.getters.getAllShops
+      })
+      .catch(err => console.log(err))
   },
   data() {
     return {
@@ -38,6 +46,14 @@ export default {
           label: "Address",
           sortable: true
         },
+        {
+          key: "lat",
+          label: "lat",
+        },
+        {
+          key: "lon",
+          label: "lon",
+         },
         {
           key: "google",
           label: "Google"
@@ -112,19 +128,6 @@ export default {
         }
       ],
       items: []
-    }
-  },
-  methods: {
-    loadShops() {
-      console.log('fields = ', this.fields)
-
-      axios
-        .get("http://localhost:3000/biedry")
-        .then(res => {
-          console.log(res)
-          this.items = res.data
-        })
-        .catch(err => console.log(err));
     }
   }
 }
