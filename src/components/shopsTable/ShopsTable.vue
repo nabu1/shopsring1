@@ -2,10 +2,18 @@
   <div>
     <b-container fluid>
       <b-row>
-        <b-table striped hover bordered :items="items" :fields="fields"></b-table>
+        <b-table striped hover bordered :items="items" :fields="fields">
+
+          <template slot="index" slot-scope="data">{{ data.index + 1 }}</template>
+          <template slot="total" slot-scope="data">{{ data.value * 100 }}</template>
+
+          <span slot="google" slot-scope="data" v-html="data.value">{{ data.value }}</span>
+          <span slot="jakd" slot-scope="data" v-html="data.value">{{ data.value }}</span>
+          <span slot="gmaps" slot-scope="data" v-html="data.value">{{ data.value }}</span>
+
+        </b-table>
       </b-row>
     </b-container>
-    <button @click="loadShops">loadShops</button>
   </div>
 </template>
 
@@ -19,27 +27,34 @@ export default {
   data() {
     return {
       fields: [
+        'index',
         {
           key: "shopName",
           label: "Sklep",
           sortable: true
         },
         {
+          key: "address",
+          label: "Address",
+          sortable: true
+        },
+        {
+          key: "google",
+          label: "Google"
+        },
+        {
+          key: "jakd",
+          label: "JakD"
+        },
+        {
+          key: "gmaps",
+          label: "Gmaps"
+        },
+        {
           key: "total",
           label: "Total",
           sortable: true,
           variant: 'warning'
-        },
-        {
-          key: "address",
-          label: "Address",
-          sortable: true,
-          width: 33
-        },
-        {
-          key: "address",
-          label: "Address",
-          sortable: true
         },
         {
           key: "chleb",
@@ -90,6 +105,10 @@ export default {
           key: "mineralna",
           label: "Mineralna",
           sortable: true
+        },
+        {
+          key: "niematego",
+          sortable: true
         }
       ],
       items: []
@@ -97,6 +116,8 @@ export default {
   },
   methods: {
     loadShops() {
+      console.log('fields = ', this.fields)
+
       axios
         .get("http://localhost:3000/biedry")
         .then(res => {
