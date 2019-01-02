@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- {{ itemsTest }} -->
     <b-container fluid>
       <b-row>
         <b-table striped hover bordered :items="items" :fields="fields">
@@ -24,14 +23,13 @@ import axios from 'axios'
 export default {
   created() {
     this.$store.dispatch('addAllShops')
+    this.$store.dispatch('getFields')
   },
   computed: {
     items() {
-      console.log('this.$store.getters.getAllShops', this.$store.getters.getAllShops)
       return this.$store.getters.getAllShops
     },
     fields() {
-      console.log('this.$store.getters.getFields', this.$store.getters.getFields)
       return this.$store.getters.getFields
     }
   },
