@@ -8,9 +8,9 @@ export const store = new Vuex.Store({
   state: {
     allShops: [],
     selectedShops: [],
-    homeGPS: {},
     items:[],
-    fields: []
+    fields: [],
+    stocksSelected: []
   },
   getters: {
     getAllShops(state) {
@@ -19,11 +19,11 @@ export const store = new Vuex.Store({
     getItems(state) {
       return state.items
     },
-    getFields(state) {
+    getStock(state) {
       return state.fields
     },
-    getHomeGPS(state) {
-      return state.homeGPS
+    getStocksSelected(state) {
+      return state.stocksSelected
     }
   },
   mutations: {
@@ -33,9 +33,9 @@ export const store = new Vuex.Store({
     FIND_SELECTED_SHOPS(state, shopsInRadius) {
       state.allShops = shopsInRadius
     },
-    GET_FIELDS(state, selectedFields) {
-      console.log('GET_FIELDS: selectedFields', selectedFields)
-      state.fields = selectedFields
+    GET_STOCK(state, columns) {
+      state.fields = columns.otherColumns.concat(columns.stocksSelected)
+      state.stocksSelected = columns.stocksSelected
     }
   },
   actions: {
@@ -45,12 +45,9 @@ export const store = new Vuex.Store({
     findSelectedShops(context, homeData) {
       ajaxFindSelectedShops(context, homeData)
     },
-    getFields(context, stocksSelected) {
-      const stocksSelectedFull = ['shopName', 'address', 'google','jakd', 'gmaps'].concat(stocksSelected)
-      const selectedFields = fields.filter(el => {
-        return stocksSelectedFull.includes(el.key)
-      })
-      context.commit('GET_FIELDS', selectedFields)
+    getStock(context, stocksSelected) {
+      const columns = { stocksSelected, otherColumns: ['shopName', 'address', 'google','jakd', 'gmaps'] }
+      context.commit('GET_STOCK', columns)
     }
   }
 })
