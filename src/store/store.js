@@ -1,63 +1,53 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
-import createPersistedState from 'vuex-persistedstate'
-// import { getHomeGPS, getDistanceFromHome } from '../components/search/filterShops'
+import { filteredShops } from '../components/search/filteredShops'
 
 Vue.use(Vuex)
 
 export const store = new Vuex.Store({
   state: {
     allShops: [],
-    cityShops: [],
     selectedShops: [],
     homeGPS: {}
   },
-  plugins: [createPersistedState()],
   getters: {
     getAllShops(state) {
-      return state.allShops
+      console.log('Tu getter "addAllShops"')
+      return state.allShops || []
     },
     getCityShops(state) {
       return state.cityShops
-    },
-    getSelectedShops(state) {
-      return state.selectedShops
     },
     getHomeGPS(state) {
       return state.homeGPS
     }
   },
   mutations: {
-    addAllShops(state, payload) {
+    ADD_ALL_SHOPS(state, payload) {
+      console.log('Tu mutation "ADD_ALL_SHOPS"')
       state.allShops = payload
+      // console.log('state.allShops = ', state.allShops)
     },
-    addCityShops(state) {
-      //state.cityShops
-    },
-    findSelectedShops(state, shopsInRadius) {
-      console.log('Tu mutations / findSelectedShops')
+    FIND_SELECTED_SHOPS(state, shopsInRadius) {
+      console.log('Tu mutations: findSelectedShops')
       console.log('shopsInRadius', shopsInRadius)
-      //state.selectedShops = shopsInRadius
-      // state.allShops = []
       state.allShops = shopsInRadius
     }
   },
   actions: {
     addAllShops(context) {
       axios
-      .get('http://localhost:3000/biedry')
-      .then(res => {
-        context.commit('addAllShops', res.data)
-      })
-      .catch(err => console.log(err))
-    },
-    addCityShops(context) {
-      context.commit('addCityShops')
+        .get('http://localhost:3000/biedry')
+        .then(res => {
+          context.commit('ADD_ALL_SHOPS', res.data)
+        })
+        .catch(err => console.log(err))
+
+      console.log('Tu action "addAllShops"')
     },
     findSelectedShops(context, homeData) {
-      console.log('Tu actions / findSelectedShops')
-      console.log('homeData', homeData)
+      console.log('Tu: actions / findSelectedShops')
 
       const key = '224e8e01cf8f43a0aabb1b68341904a1'
       const encodedAddress = encodeURI(homeData.street + ' ' + homeData.streetNumber + ', ' + homeData.city)
@@ -68,23 +58,15 @@ export const store = new Vuex.Store({
           const homeGPS = {
             lat: res.data.results[0].geometry.lat,
             lon: res.data.results[0].geometry.lng,
-            radius: this.radius
+            radius: homeData.radius
           }
 
-          const shops = homeData.shops
-          console.log('shops', shops)
-
-          const shopsInRadius = filteredShops(shops, homeGPS) // todo: tu się wywala
+          const shopsInRadius = filteredShops(homeData.shops, homeGPS)
           console.log('shopsInRadius', shopsInRadius)
 
-          this.$store.dispatch('findSelectedShops', shopsInRadius)
+          context.commit('FIND_SELECTED_SHOPS', shopsInRadius)
       })
-      .catch(err => console.log('Buont Search.vue / methods: search: ', err))
-
-
-
-
-      context.commit('findSelectedShops', shopsInRadius)
+      .catch(err => console.log('My error: ', err))
     }
   }
 })
