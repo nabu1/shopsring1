@@ -26,24 +26,26 @@ export default {
         street: this.street,
         streetNumber: this.streetNumber,
         radius: this.radius,
-        shops: this.$store.getters.getAllShops
+        shops: this.$store.getters.getAllShopsCopy
       }
 
-      this.$store.dispatch('addAllShops')
-      this.$store.dispatch('getStock')
+      // console.log('homeData', homeData)
 
-       setTimeout(() => {
-         this.$store.dispatch('findSelectedShops', homeData)
-       }, 1000)
+      this.$store.dispatch('findSelectedShops', homeData)
     },
+    //async reset() {
     reset() {
       this.city = this.cities[0].text
       this.street = ''
       this.streetNumber = ''
       this.radius = ''
 
+      this.$store.dispatch('toggleCheckboxes')
       this.$store.dispatch('addAllShops')
-      this.$store.dispatch('getStock')
+      //await this.$nextTick()
+      //console.log('Po nextTicku')
+      // this.$forceUpdate();
+      //this.showKey = ''
     }
   }
 }
