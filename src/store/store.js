@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import { ajaxAddAllShops, ajaxFindSelectedShops } from '../services/ajax'
+import { bootstrapColumns } from '../data/data'
 
 Vue.use(Vuex)
 
@@ -25,11 +26,9 @@ export const store = new Vuex.Store({
       return state.items
     },
     getStock(state) {
-      console.log('getStock')
       return state.fields
     },
     getStocksSelected(state) {
-      console.log('getStocksSelected')
       return state.stocksSelected
     },
     getShowCheckboxes(state) {
@@ -37,9 +36,9 @@ export const store = new Vuex.Store({
     }
   },
   mutations: {
-    ADD_ALL_SHOPS(state, payload) {
-      state.allShops = payload
-      state.allShopsCopy = payload
+    ADD_ALL_SHOPS(state, allShops) {
+      state.allShops = allShops
+      state.allShopsCopy = allShops
     },
     FIND_SELECTED_SHOPS(state, shopsInRadius) {
       state.allShops = shopsInRadius
@@ -53,14 +52,14 @@ export const store = new Vuex.Store({
     }
   },
   actions: {
-    addAllShops(context, payload) {
-      ajaxAddAllShops(context, payload)
+    addAllShops(context) {
+      ajaxAddAllShops(context)
     },
     findSelectedShops(context, homeData) {
       ajaxFindSelectedShops(context, homeData)
     },
     getStock(context, stocksSelected) {
-      const columns = { stocksSelected, otherColumns: ['shopName', 'address', 'total', 'google','jakd', 'gmaps'] }
+      const columns = { stocksSelected, otherColumns: bootstrapColumns}
       context.commit('GET_STOCK', columns)
     },
     addTotal(context, shopsWithTotal) {
