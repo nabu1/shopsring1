@@ -29,24 +29,14 @@ export default {
         shops: this.$store.getters.getAllShops
       }
 
-       //console.log('this.$store.getters.getAllShops.length', this.$store.getters.getAllShops.length);
-       //console.log('homeData', homeData);
-
-         this.$store.dispatch('addAllShops')
-         this.$store.dispatch('getStock')
-
-         //console.log('homeData', homeData)
+      this.$store.dispatch('addAllShops')
+      this.$store.dispatch('getStock')
 
        setTimeout(() => {
          this.$store.dispatch('findSelectedShops', homeData)
        }, 1000)
-       /*
-       */
     },
     reset() {
-      console.log('reset')
-      console.log('this.cities[0]', this.cities[0])
-
       this.city = this.cities[0].text
       this.street = ''
       this.streetNumber = ''

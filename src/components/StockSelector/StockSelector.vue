@@ -1,26 +1,31 @@
 <template src="./StockSelector.html"></template>
 
 <script>
-import { stocks1, stocks2 } from "../../data/data"
+import { stocksToBuy } from "../../data/data"
 
 export default {
   data() {
     return {
-      selected1: [],
-      selected2: [],
-      options1: stocks1,
-      options2: stocks2
-    };
+      selected: [],
+      options: stocksToBuy
+    }
   },
   methods: {
     stockSelected() {
       setTimeout(() => {
-        const stockSelected = this.selected1.concat(this.selected2)
-
-        //console.table('stockSelected');
-        //console.table(stockSelected);
-
+        const stockSelected = this.selected
         this.$store.dispatch("getStock", stockSelected)
+
+        const shops = this.$store.getters.getAllShops
+        const stocks = this.$store.getters.getStocksSelected
+
+        shops.map((shop, index) => {
+          let suma = 0
+          let pricesTotal = stocks.map(stock => suma += shop[stock])
+          shops[index].total = pricesTotal.pop()
+        })
+
+        this.$store.dispatch('addTotal', shops)
       }, 0)
     }
   }
