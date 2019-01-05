@@ -28,7 +28,6 @@ src/assets/logo.png
 src/components/shopsTable/shopsFiltered.json
 src/components/shopsTable/shopsFinal.json
 README.md
-index.html
 src/tst.vue
 src/shopsFinalWithStock.json
 src/shopsFinalWithStock.json
@@ -68,3 +67,4 @@ cypress/support/commands.js
 cypress/support/index.js
 server.js
 webpack.config.1.js
+src/zabki.bak.json
