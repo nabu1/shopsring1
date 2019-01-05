@@ -15,12 +15,9 @@ export default {
     },
     fields() {
       return this.$store.getters.getStock
-    }
-  },
-  data() {
-    return {
-      // items: items()
-      loading: true
+    },
+    loading() {
+      return this.$store.getters.getLoading
     }
   },
   methods: {
