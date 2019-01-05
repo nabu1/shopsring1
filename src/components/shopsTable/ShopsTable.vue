@@ -19,7 +19,8 @@ export default {
   },
   data() {
     return {
-      //items: items()
+      // items: items()
+      loading: true
     }
   },
   methods: {
