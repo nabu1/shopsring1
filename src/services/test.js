@@ -1,6 +1,6 @@
 const axios = require('axios')
 const fs = require('fs')
-const fileSave = './zabki.json'
+const fileSave = './zabkiTylko.json'
 const _ = require('lodash')
 
 // let from = 418  // 6227
@@ -9,7 +9,7 @@ const _ = require('lodash')
 function getZabka(from, to) {
   const config = {
     headers: {
-      'User-Agent': 'ozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36',
+      'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36',
       'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
       'Accept-Encoding': 'gzip, deflate, br',
       'Accept-Language': 'pl,en;q=0.9,la;q=0.8,ru;q=0.7',
@@ -57,11 +57,12 @@ function getZabka(from, to) {
   }
 }
 
-const a = 4340
-const b = a + 125
+const a = 6836
+const b = a + 65
 
+//console.log('a + b = ', a + 125)
 
-getZabka(a, b)   // 70 > 90 > 110 > 125
+//getZabka(a, b)   // 70 > 90 > 110 > 125
 
 
 
@@ -85,6 +86,32 @@ For existing repositories, simply add the heroku remote
 heroku git:remote -a shopsring
 
 */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
