@@ -38,28 +38,30 @@ export default {
 
       this.$store.dispatch("addAllShops");
 
-      //console.log("1. getAllShops = ", this.$store.getters.getAllShops);
-      //console.log("1. getAllShopsCopy = ", this.$store.getters.getAllShopsCopy);
-
-      setTimeout(() => {
-        //console.log("2. getAllShops = ", this.$store.getters.getAllShops);
-        //console.log("2. getAllShopsCopy = ", this.$store.getters.getAllShopsCopy);
-
         const homeData = {
           city: this.city,
           street: this.street,
           streetNumber: this.streetNumber,
-          //radius: this.radius,
         };
 
         const radius = this.radius
         const allShops = this.$store.getters.getAllShopsCopy
+        const stocks = this.$store.getters.getStocksSelected
+
+        console.log('2. stocks = ', stocks)
+        console.log('2. allShops = ', allShops)  // todo:
 
         this.$store.dispatch("findSelectedShops", { homeData, radius, allShops })
         this.$store.dispatch("showLoader", true);
+        this.$store.dispatch("getStock", stocks)
 
-      }, 350)
+        const getSelectedShops = this.$store.getters.getSelectedShops
 
+        setTimeout(() => {
+          console.log('getSelectedShops = ', getSelectedShops)
+        }, 500);
+
+      //}, 0)
     },
     hideModalCity() {
       this.$refs.modalCity.hide();
