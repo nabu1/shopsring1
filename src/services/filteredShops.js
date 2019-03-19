@@ -46,7 +46,7 @@ export default (homeGPSAndAddress, radius, allShops) => {
 
   const shopsInRadiusWithJakDAndGmaps = shopsInRadiusWithJakD.map(el => {
     let link = constants.GOOGLE_MAPS
-    link += encodeURI(`${homeGPSAndAddress.street}+${homeGPSAndAddress.streetNumber}${homeGPSAndAddress.city}`)
+    link += encodeURI(`${homeGPSAndAddress.street}+${homeGPSAndAddress.streetNumber}+${homeGPSAndAddress.city}`)
     link += '/'
     link += encodeURI(`${el.address} ${el.city}`)
 
