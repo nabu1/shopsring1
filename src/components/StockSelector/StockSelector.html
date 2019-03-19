@@ -4,6 +4,7 @@
       <b-form-row v-if="show" class="mt-2">
         <b-form-checkbox-group data-test="stocks"
                                v-model="selected"
+                               aria-label="options"
                                @change="stockSelected"
                                class="align-middle"
                                :options="options">
